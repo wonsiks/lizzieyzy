@@ -45,7 +45,7 @@ public class Config {
   public boolean fastChange = true;
   public boolean showKataGoScoreLeadWithKomi = false;
   //  public boolean kataGoScoreMeanAlwaysBlack = false;
-  public boolean scoreMeanWinrateGraphBoard = false;
+  // public boolean scoreMeanWinrateGraphBoard = false;
   public boolean showKataGoEstimate = false;
   // public boolean allowDrageDoubleClick = true;
   public boolean showKataGoEstimateOnSubbord = false;
@@ -242,7 +242,7 @@ public class Config {
 
   public boolean autoCheckVersion = true;
   public String autoCheckDate = "";
-  public String ignoreVersion = "";
+  public int ignoreVersion = 0;
 
   public String kataRules = "";
   public boolean autoLoadKataRules = false;
@@ -399,7 +399,7 @@ public class Config {
   public int newEngineGameHandicap = 0;
 
   public boolean UsePlayMode = true;
-  public int useLanguage = 0; // 0默认 1中文2英文..
+  public int useLanguage = 0; // 0默认 1中文2英文3韩语4日本語..
   public boolean needReopenFirstUseSettings = false;
 
   public boolean autoCheckEngineAlive = true;
@@ -464,6 +464,10 @@ public class Config {
   public boolean useDefaultInfoRowOrder = true;
 
   public boolean useIinCoordsName = false;
+  public boolean useFoxStyleCoords = false;
+  public boolean useNumCoordsFromTop = false;
+  public boolean useNumCoordsFromBottom = false;
+
   public boolean autoReplayBranch = false;
   public boolean autoReplayDisplayEntireVariationsFirst = false;
   public double displayEntireVariationsFirstSeconds = 3.0;
@@ -495,10 +499,12 @@ public class Config {
   public boolean showKataGoEstimateBySize = false;
   public boolean showKataGoEstimateBigBelow = false;
   public boolean showKataGoEstimateNormal = true;
+  public boolean showKataGoEstimateNotOnlive = false;
 
   public boolean showPureEstimateBySize = false;
   public boolean showPureEstimateBigBelow = true;
   public boolean showPureEstimateNormal = false;
+  public boolean showPureEstimateNotOnlive = false;
 
   public boolean useJavaLooks = false;
   public boolean shouldWidenCheckBox = false;
@@ -573,7 +579,7 @@ public class Config {
 
   public int otherSizeWidth = 21;
   public int otherSizeHeight = 21;
-  public boolean useFoxStyleCoords = false;
+
   public boolean stopAtEmptyBoard = false;
 
   public boolean useScoreDiffInVariationTree = true;
@@ -605,6 +611,8 @@ public class Config {
 
   public boolean showBlackCandidates = true;
   public boolean showWhiteCandidates = true;
+
+  public boolean useTerritoryInScore = false;
 
   private JSONObject loadAndMergeSaveBoardConfig(
       JSONObject defaultCfg, String fileName, boolean needValidation) throws IOException {
@@ -891,7 +899,7 @@ public class Config {
     showMoveNumberFromOne = uiConfig.optBoolean("movenumber-from-one", false);
     // kataGoNotShowWinrate = uiConfig.optBoolean("katago-notshow-winrate", false);
     showKataGoEstimate = uiConfig.optBoolean("show-katago-estimate", false);
-    scoreMeanWinrateGraphBoard = uiConfig.optBoolean("scoremean-winrategraph-board", false);
+    // scoreMeanWinrateGraphBoard = uiConfig.optBoolean("scoremean-winrategraph-board", false);
     showSuggestionOrder = uiConfig.optBoolean("show-suggestion-order", true);
     showSuggestionMaxRed = uiConfig.optBoolean("show-suggestion-maxred", true);
 
@@ -910,10 +918,12 @@ public class Config {
     showKataGoEstimateNormal = uiConfig.optBoolean("show-katago-estimate-normal", true);
     showKataGoEstimateBySize = uiConfig.optBoolean("show-katago-estimate-by-size", false);
     showKataGoEstimateBigBelow = uiConfig.optBoolean("show-katago-estimate-big-below", false);
+    showKataGoEstimateNotOnlive = uiConfig.optBoolean("show-katago-estimate-not-on-live", false);
 
-    showPureEstimateNormal = uiConfig.optBoolean("show-Pure-estimate-normal", false);
-    showPureEstimateBySize = uiConfig.optBoolean("show-Pure-estimate-by-size", false);
-    showPureEstimateBigBelow = uiConfig.optBoolean("show-Pure-estimate-big-below", true);
+    showPureEstimateNormal = uiConfig.optBoolean("show-pure-estimate-normal", false);
+    showPureEstimateBySize = uiConfig.optBoolean("show-pure-estimate-by-size", false);
+    showPureEstimateBigBelow = uiConfig.optBoolean("show-pure-estimate-big-below", true);
+    showPureEstimateNotOnlive = uiConfig.optBoolean("show-pure-estimate-not-on-live", false);
 
     useJavaLooks = uiConfig.optBoolean("use-java-looks", !OS.isWindows());
     showNextMoveBlunder = uiConfig.optBoolean("show-next-move-blunder", true);
@@ -1208,7 +1218,7 @@ public class Config {
     sharePublic = uiConfig.optBoolean("share-public", true);
     autoCheckVersion = uiConfig.optBoolean("auto-check-version", true);
     autoCheckDate = uiConfig.optString("auto-check-date", "");
-    ignoreVersion = uiConfig.optString("ignore-version", "");
+    ignoreVersion = uiConfig.optInt("ignore-version", 0);
     // firstUse = uiConfig.optBoolean("first-time-use", true);
     loadSgfLast = uiConfig.optBoolean("load-sgf-last", false);
     useShortcutKataEstimate = uiConfig.optBoolean("shortcut-kata-estimate", false);
@@ -1289,6 +1299,8 @@ public class Config {
     otherSizeWidth = uiConfig.optInt("other-size-width", 21);
     otherSizeHeight = uiConfig.optInt("other-size-height", 21);
     useFoxStyleCoords = uiConfig.optBoolean("use-fox-style-coords", false);
+    useNumCoordsFromTop = uiConfig.optBoolean("use-num-coords-from-top", false);
+    useNumCoordsFromBottom = uiConfig.optBoolean("use-num-coords-from-bottom", false);
     showScrollVariation = uiConfig.optBoolean("show-scroll-variation", true);
     ignoreOutOfWidth = uiConfig.optBoolean("ignore-out-of-width", false);
     enginePkPonder = uiConfig.optBoolean("engine-pk-ponder", false);
@@ -1310,6 +1322,7 @@ public class Config {
     allowDoubleClick = uiConfig.optBoolean("allow-double-click", true);
     allowDrag = uiConfig.optBoolean("allow-drag", false);
     noRefreshOnSub = uiConfig.optBoolean("no-refresh-on-sub", true);
+    useTerritoryInScore = uiConfig.optBoolean("use-territory-in-score", false);
 
     // chkEngineSgfStart = uiConfig.optBoolean("engine-sgf-start", true);
     engineSgfStartRandom = uiConfig.optBoolean("engine-sgf-random", true);
@@ -2443,10 +2456,12 @@ public class Config {
     uiConfig.put("show-katago-estimate-normal", showKataGoEstimateNormal);
     uiConfig.put("show-katago-estimate-by-size", showKataGoEstimateBySize);
     uiConfig.put("show-katago-estimate-big-below", showKataGoEstimateBigBelow);
+    uiConfig.put("show-katago-estimate-not-on-live", showKataGoEstimateNotOnlive);
 
-    uiConfig.put("show-Pure-estimate-normal", showPureEstimateNormal);
-    uiConfig.put("show-Pure-estimate-by-size", showPureEstimateBySize);
-    uiConfig.put("show-Pure-estimate-big-below", showPureEstimateBigBelow);
+    uiConfig.put("show-pure-estimate-normal", showPureEstimateNormal);
+    uiConfig.put("show-pure-estimate-by-size", showPureEstimateBySize);
+    uiConfig.put("show-pure-estimate-big-below", showPureEstimateBigBelow);
+    uiConfig.put("show-pure-estimate-not-on-live", showPureEstimateNotOnlive);
   }
 
   public void setSuggestionInfoOrdr(int winrateOrder, int playoutsOrder, int scoreLeadOrder) {
